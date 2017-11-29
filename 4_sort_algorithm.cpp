@@ -5,18 +5,18 @@
 #include <stdio.h>
 using namespace std;
 
-//Bubble排序算法， 对相邻的两个数依次进行比较和调整，让较大的数往下沉，较小的往上冒
-//Bubble排序需约0.005~0.006s(n=1000) 
+//Bubble sorting algorithms, repeated swapping the adjacent elements if they are in wrong order
+//Bubble sorting algorithm taks 0.005~0.006s (n=1000)
 template<class T>void Bubble (T a[] , int n)
 {
 	int i,j;
-	T temp;//创建中间变量 
+	T temp;// create intermidiate variable
 	for(i=0;i<n;i++)
 	{
 		for(j=n-1;j>i;j--)
 		{
-			if(a[j-1]>a[j])//从后往前将相邻的两个数作比较后将较小的数字前移 
-			{              //第一个循环即将数组中的最小值移到最前端之后每次皆可减少比较次数 
+			if(a[j-1]>a[j]) //Move the smaller numbers forward after comparing the two adjacent numbers
+			{               //Move the minimum value of the array to the forefront in the first round and the comparisons reduce each time
 				temp=a[j-1];
 				a[j-1]=a[j];
 				a[j]=temp;
@@ -25,18 +25,18 @@ template<class T>void Bubble (T a[] , int n)
 	}
 }
 
-//Ranking排序算法，用索引数组排序 
-//Ranking排序需约0.008s(n=1000)
-//创建索引数组 
+//Rank sort: another method of sorting an array
+//Rank sort takes about 0.008s(n=1000)
+//Create an indexed array 
 template<class T>void Rank(T a[],int n,int r[])
 {
 	for(int i=0;i<n;i++)
-		r[i]=0;//初始化r[] 
+		r[i]=0;// Initialize r[] 
 	for(int i=1;i<n;i++)
 	{
 		for(int j=0;j<i;j++)
 		{
-			if(a[j]<=a[i])r[i]++;//通过数的比较，对编号的r[]进行自加 
+			if(a[j]<=a[i])r[i]++;
 			else r[j]++;
 		}
 	}
@@ -45,16 +45,16 @@ template<class T>void Rank(T a[],int n,int r[])
 //Ranking 
 template<class T>void Ranking (T a[] , int n,int r[])
 {
-	T*u=new T[n+1];//创建一个新的动态数组 
-	for(int i=0;i<n;i++)//以r[]的数值为u[]的编号，赋予对应的a[]值 
+	T*u=new T[n+1];//Create a new dynamic array
+	for(int i=0;i<n;i++)
 	u[r[i]]=a[i];
 	for(int i=0;i<n;i++)
-	a[i]=u[i];//再将u[]的赋予对应a[] 
+	a[i]=u[i]; 
 	delete [] u;
 }
 
-//Select排序算法，找出最小的数与第一个数交换，再在剩下的数中找出最小的数与剩下数的第一个交换以此类推 
-//Select排序需约0.004s(n=1000) 
+//Selection sort: find the smallest number to exchange with the first number, and then find the remaining smallest number to exchange with the remaiining first number , and so on
+//Selection sort takes about 0.004s(n=1000) 
 template<class T>void Select(T a[],int n)
 {
 	int i,j,min;
@@ -62,12 +62,12 @@ template<class T>void Select(T a[],int n)
 	for(i=0;i<n;i++)
 	{
 		min=i;
-		for(j=i+1;j<n;j++)//找出此次i循环中最小的数 
+		for(j=i+1;j<n;j++)//find the smallest number in i rounds 
 		{
 			if(a[j]<a[min])
 			min=j;
 		}
-		if(i!=min)//若此次i循环中，i与min不等则交换a[i]与a[min]的值 
+		if(i!=min)//exchange the values of a[i] with a[min] if i not equal to min
 		{
 		temp=a[i];
 		a[i]=a[min];
@@ -77,8 +77,8 @@ template<class T>void Select(T a[],int n)
 	
 }
 
-//Insertion排序算法，将数进行比较后根据大小插入数组中 
-//Insertion排序需约0.002s(n=1000)
+//Insertion sort
+//Insertion sort takes about 0.002s(n=1000)
 template<class T>void Insertion(T a[],int n)
 {
 	int i,j;
@@ -86,7 +86,7 @@ template<class T>void Insertion(T a[],int n)
 	for(i=1;i<n;i++)
 	{
 		temp=a[i];
-		for(j=i-1;j>=0&&temp<a[j];j--)//循环并比较数值后将两个数值交换实现插入 
+		for(j=i-1;j>=0&&temp<a[j];j--) 
 		{
 			a[j+1]=a[j];
 		}
@@ -94,18 +94,18 @@ template<class T>void Insertion(T a[],int n)
 	}
 }
 
-int main()
+int main() //main functions for four sorting algorithms
 {
 	int n;
-    cout<<"请输入数组长度n(大于等于1000)";
+    cout<<"Please input the length of array: n(>=1000)";
 	cin >>n;
-	cout<<"请从Bubble,Ranking,Select,Insertion中选择排序算法(输入排序算法的名称如Bubble)";
+	cout<<"Please select the sorting algorithms from Bubble,Ranking,Selection,Insertion";
 	string str1;
 	cin>>str1;
-	int *p=new int[n];//创建动态数组 
+	int *p=new int[n];//Create a dynamic array 
 	srand(time(NULL));
 	for (int i=0;i<n;i++)
-	p[i]=int(rand());//为动态数组赋随机值 
+	p[i]=int(rand());//Assign random values to dynamic arrays
 	double begin,end;
 	if(str1=="Bubble") 
 	{begin=clock();
@@ -133,10 +133,10 @@ int main()
 	Insertion(p,n);
 	end=clock();
     }
-	for (int i=0;i<n;i++)//输出排序后的数组 
+	for (int i=0;i<n;i++)//Outpu the sorted array 
 	cout<<p[i]<<endl;
-	cout<<"排序所需时间约为"<<0.001*(double(end)-double(begin))<<"s"<<endl;
-	delete []p;//清除
+	cout<<"The sorting takes around"<<0.001*(double(end)-double(begin))<<"s"<<endl;
+	delete []p;
 	return 0;
 }
 
